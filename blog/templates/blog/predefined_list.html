@@ -1,0 +1,153 @@
+{% extends "blog/base.html" %}
+{% block content %}
+    <div class="accordion" id="accordionExample">
+      <div class="card">
+        <div class="card-header" id="headingOne">
+          <h2 class="mb-0">
+            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+              What is the average price for a listing with 8 bedrooms?
+            </button>
+          </h2>
+        </div>
+        <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+          <div class="card-body">
+              ${{ price|floatformat:2 }}
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header" id="headingTwo">
+          <h2 class="mb-0">
+            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+              What is the average cleaning review score for listings with TV?
+            </button>
+          </h2>
+        </div>
+        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+          <div class="card-body">
+            {{ score_cleanliness|floatformat:2 }}
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header" id="headingThree">
+          <h2 class="mb-0">
+            <a class="btn btn-link" target="_blank" rel="noopener noreferrer" href="{% url 'query-three' %}">
+              Print all the hosts who have an available property between date 03.2019 and 09.2019
+            </a>
+          </h2>
+        </div>
+      </div>
+        <div class="card">
+        <div class="card-header" id="headingFour">
+          <h2 class="mb-0">
+            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+              Print all the dates that 'Viajes Eco' has available accommodations for rent
+            </button>
+          </h2>
+        </div>
+        <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
+          <div class="card-body">
+            <ul class="list-group list-group-flush">
+                {% for listing in avail_list %}
+                    <li class="list-group-item">{{ listing.date_field }}</li>
+                {% endfor %}
+            </ul>
+          </div>
+        </div>
+      </div>
+        <div class="card">
+        <div class="card-header" id="headingFive">
+          <h2 class="mb-0">
+            <a class="btn btn-link" target="_blank" rel="noopener noreferrer"  href="{% url 'query-five' %}">
+              Find all the hosts (host_ids, host_names) that have only one listing
+            </a>
+          </h2>
+        </div>
+      </div>
+        <div class="card">
+        <div class="card-header" id="headingSix">
+          <h2 class="mb-0">
+            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+              What is the difference in the average price of listings with and without Wifi
+            </button>
+          </h2>
+        </div>
+        <div id="collapseSix" class="collapse" aria-labelledby="headingSix" data-parent="#accordionExample">
+          <div class="card-body">
+              ${{ ave_wifi_diff|floatformat:2 }}
+          </div>
+        </div>
+      </div>
+        <div class="card">
+        <div class="card-header" id="headingSeven">
+          <h2 class="mb-0">
+            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">
+              How much more (or less) costly to rent a room with 8 beds in Berlin compared to Madrid on average?
+            </button>
+          </h2>
+        </div>
+        <div id="collapseSeven" class="collapse" aria-labelledby="headingSeven" data-parent="#accordionExample">
+          <div class="card-body">
+              ${{ cost_less_more|floatformat:2 }}
+          </div>
+        </div>
+      </div>
+        <div class="card">
+        <div class="card-header" id="headingNine">
+          <h2 class="mb-0">
+            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseNine" aria-expanded="false" aria-controls="collapseSeven">
+              Find the top-10 (in terms of the number of listings) hosts (host_ids, host_names) in Spain.
+            </button>
+          </h2>
+        </div>
+        <div id="collapseNine" class="collapse" aria-labelledby="headingNine" data-parent="#accordionExample">
+          <div class="card-body">
+            <ul class="list-group list-group-flush">
+              {% for host in occurance %}
+                  <li class="list-group-item">{{ forloop.counter }}, {{ host.host_id }}, {{ host.host_name }}</li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      </div>
+        <div class="card">
+        <div class="card-header" id="headingTen">
+          <h2 class="mb-0">
+            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTen" aria-expanded="false" aria-controls="collapseTen">
+              Find the top-10 rated (review_score_rating) apartments (id,name) in Barcelona.
+            </button>
+          </h2>
+        </div>
+        <div id="collapseTen" class="collapse" aria-labelledby="headingTen" data-parent="#accordionExample">
+          <div class="card-body">
+            <ul class="list-group list-group-flush">
+              {% for listing in top10 %}
+                  <li class="list-group-item">{{ forloop.counter }}, {{ listing.id }}, {{ listing.name }}</li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      </div>
+    <!--
+        <div class="card">
+        <div class="card-header" id="headingEight">
+          <h2 class="mb-0">
+            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseEight" aria-expanded="false" aria-controls="collapseEight">
+              Find the top-10 (in terms of the number of listings) hosts (host_ids, host_names) in Spain
+            </button>
+          </h2>
+        </div>
+        <div id="collapseEight" class="collapse" aria-labelledby="headingEight" data-parent="#accordionExample">
+          <div class="card-body">
+              <ul class="list-group list-group-flush">
+                  {% for listing in top10 %}
+                    <li class="list-group-item">{{ forloop.counter }}, {{ listing.id }}, {{ listing.name }}</li>
+                {% endfor %}
+          </div>
+
+        </div>
+      </div>
+      -->
+</div>
+{% endblock content %}

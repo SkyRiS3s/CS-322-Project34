@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Interface</title>
+    <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/fonts/font-awesome.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="/assets/css/Navigation-with-Search.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <style>
+        .active{
+            background-color: #00ffec;
+        }
+        .nav-item:hover{
+            background-color: #00ffec;
+        }
+        .active:hover{
+            background-color: #00ffec;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-light navbar-expand-md navigation-clean-search">
+        <div class="container"><a class="navbar-brand" href="{% url 'blog-home' %}">Group34 - Interface</a><button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse"
+                id="navcol-1">
+                <ul class="nav navbar-nav">
+                    <li class="nav-item {% if request.resolver_match.url_name == "predefined" or request.resolver_match.url_name == "query-three" %}active{% endif %}" role="presentation"><a class="nav-link" href="{% url 'predefined' %}">Predefined Queries</a></li>
+                    <li class="nav-item {% if request.resolver_match.url_name == "listing" %}active{% endif %}" role="presentation"><a class="nav-link" href="{% url 'listing' %}">Listings</a></li>
+                    <li class="nav-item {% if request.resolver_match.url_name == "add-listing" %}active{% endif %}" role="presentation"><a class="nav-link" href="{% url 'add-listing' %}">Insert Listings</a></li>
+                    <li class="nav-item {% if request.resolver_match.url_name == "search" %}active{% endif %}" role="presentation"><a class="nav-link" href="{% url 'search' %}">Advanced Search</a></li>
+                </ul>
+                <form class="form-inline mr-auto" action="{% url 'listing-search' %}" method="get">
+                    <div class="form-group"><label for="search-field"><i class="fa fa-search"></i></label><input class="form-control search-field" type="search" id="search-field" name="search" placeholder="Search a keyword here..."></div>
+                </form></div>
+        </div>
+    </nav>
+    <h1></h1>
+    <div class="container">
+        {% block content %}
+
+        {% endblock %}
+    </div>
+    <script src="/assets/js/jquery-1.9.1.min.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
+    <script src="/assets/js/country-state-select.js"></script>
+    {% block extra_js %}
+    {% endblock %}
+</body>
+
+</html>

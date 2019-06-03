@@ -1,0 +1,52 @@
+{% extends "blog/base.html" %}
+{% load extra_tags %}
+
+{% block content %}
+   <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+            <th scope="col">Host Name</th>
+          <th scope="col">Host Name</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for host in listing %}
+            <tr>
+              <th scope="row">{{ forloop.counter }}</th>
+                <td>{{ host.listing__host_id__host_id }}</td>
+              <td>{{ host.listing__host_id__host_name }}</td>
+            </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <div class="row">
+        <form class="form-inline" method="get">
+    <nav aria-label="...">
+      <ul class="pagination">
+          {% if listing.has_previous %}
+        <li class="page-item disabled">
+            <a class="page-link" href="?page=1" tabindex="-1" aria-disabled="true">First</a>
+          <a class="page-link" href="?page={{ listing.previous_page_number }}" tabindex="-1" aria-disabled="true">Previous</a>
+        </li>
+          {% endif %}
+        <select name="page" class="form-control">
+        {% for page_num in total_num %}
+            <option {% if page_num == current_num %}selected{% endif %} value="{{ page_num }}">{{ page_num }}</option>
+        {% endfor %}
+        </select>
+
+        {% if listing.has_next %}
+        <li class="page-item">
+          <a class="page-link" href="?page={{ listing.next_page_number }}">Next</a>
+            <a class="page-link" href="?page={{ listing.paginator.num_pages }}">Last</a>
+        </li>
+        {% endif %}
+      </ul>
+    </nav>
+        <br>
+        Page {{ listing.number }} of {{ listing.paginator.num_pages }}.<br>
+        <input type="submit" value="Go" class="btn btn-primary">
+        </form>
+                </div>
+{% endblock content %}

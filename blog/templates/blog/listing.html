@@ -1,0 +1,64 @@
+{% extends "blog/base.html" %}
+{% load extra_tags %}
+{% block content %}
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                {{ message }}
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+        {% endfor %}
+    {% endif %}
+    <div class="row">
+        {% if not listings %}
+            <h3>Listings not found</h3>
+        {% endif %}
+        {% for listing in listings %}
+            <div class="col-sm-4" style="padding-bottom: 30px">
+                <div class="card" style="width: 18rem;">
+                  <img class="card-img-top" src="{{ listing.picture_url }}" alt="Card image cap">
+                    <div class="card-header">
+                        <strong><a href="{% url 'listing-single' listing.id %}">{{ listing.name }}</a></strong>
+                    </div>
+                  <div class="card-body">
+                    <p class="card-text">{{ listing.property_type__property_type }} in {{ listing.neighborhood__city__city }}, {{ listing.neighborhood__neighborhood }}<br>
+                    </p>
+                    <p>${{ listing.price }}</p>
+                  </div>
+                  <div class="card-footer text-muted">
+                    <p class="card-text">
+                        {% for star in listing.review_scores_value|rating %}
+                            {% if star == 1 %}
+                                <i class="fas fa-star"></i>
+                            {% else %}
+                                <i class="far fa-star"></i>
+                            {% endif %}
+                        {% endfor %} {{ listing.review_scores_value }}
+                    </p>
+                  </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <nav aria-label="Page navigation example">
+      <ul class="pagination">
+          {% if listings.has_previous %}
+              <li class="page-item"><a class="page-link" href="?page=1">&laquo; first</a></li>
+              <li class="page-item"><a class="page-link" href="?page={{ listings.previous_page_number }}">previous</a></li>
+            {% endif %}
+            <li class="page-item active">
+                <a>
+                    Page {{ listings.number }} of {{ listings.paginator.num_pages }}.
+                    <span class="sr-only">(current)</span>
+                </a>
+            </li>
+        {% if listings.has_next %}
+            <li class="page-item"><a class="page-link" href="?page={{ listings.next_page_number }}">next</a></li>
+            <li class="page-item"><a class="page-link" href="?page={{ listings.paginator.num_pages }}">last &raquo;</a></li>
+            {% endif %}
+      </ul>
+    </nav>
+{% endblock content %}
+

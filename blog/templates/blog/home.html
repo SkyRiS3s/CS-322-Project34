@@ -1,0 +1,40 @@
+{% extends "blog/base.html" %}
+{% block content %}
+    {% if not posts %}
+         {{ block.super }}
+    {% endif %}
+                <div class="jumbotron jumbotron-fluid">
+              <div class="container">
+                <h1 class="display-4">DBS Project</h1>
+                <p class="lead">Web Interface</p>
+              </div>
+            </div>
+    <!--
+    {% for post in posts %}
+        <article class="media content-section">
+            <div class="media-body">
+
+                <p class="article-content">"bonjour"</p>
+            </div>
+        </article>
+    {% endfor %}
+
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title">Magnifique House in Barcelona</h4>
+            <h6 class="text-muted card-subtitle mb-2">Host name</h6>
+            <p class="card-text">Listing description</p><a class="card-link" href="#">Price</a><a class="card-link" href="#"></a></div>
+    </div>
+    -->
+{% endblock content %}
+
+{#{% extends "base.html" %}#}
+{##}
+{##}
+{#{% block content %}#}
+{##}
+{#<div class="jumbotron text-center">#}
+{#  <h1><font size = "7">Interface to our IMDb</font></h1>#}
+{#  <h2>Group 34</h2>#}
+{#</div>#}
+{#{% endblock %}#}

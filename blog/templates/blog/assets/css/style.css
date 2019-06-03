@@ -1,0 +1,8 @@
+.jumbotron {
+  /*margin: auto;*/
+}
+
+.table thead th {
+  filter: sepia(52%);
+}
+

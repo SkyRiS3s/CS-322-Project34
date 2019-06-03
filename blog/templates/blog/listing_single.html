@@ -1,0 +1,150 @@
+{% extends "blog/base.html" %}
+{% load extra_tags %}
+{% block content %}
+    <div class="row" style="padding-bottom: 10px">
+        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">
+          Delete
+        </button>
+    </div>
+    <div class="row">
+        <div class="col-sm-8"><img style="width: 100%" alt="{{ listing.name }}" src="{{ listing.picture_url }}" /></div>
+        <div class="col-sm-4">
+            <div class="card">
+              <h5 class="card-header">{{ listing.name }}</h5>
+              <div class="card-body">
+                <h5 class="card-title">{{ listing.property_type.property_type }}</h5>
+                <p class="card-text"><strong><i class="fa fa-map-marker" aria-hidden="true"> Location</i></strong><br>
+                    {{ listing.neighborhood.neighborhood }}, {{ listing.neighborhood.city.city }}, {{ listing.neighborhood.city.country.country }}
+                </p>
+                <p class="card-text"><strong><i class="fa fa-money"> Price</i></strong><br>
+                    ${{ listing.price }}
+                </p>
+                  <p class="card-text">
+                        {% for star in listing.review_scores_value|rating %}
+                            {% if star == 1 %}
+                                <i class="fas fa-star"></i>
+                            {% else %}
+                                <i class="far fa-star"></i>
+                            {% endif %}
+                        {% endfor %} {{ listing.review_scores_value }}
+                    </p>
+                  <h5 class="card-title">Host: <a href="{% url 'host' listing.host_id.host_id %}">{{ listing.host_id.host_name }}</a></h5>
+              </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <h3>Description</h3>
+            <p class="text-muted text-justify">{{ listing.description }}</p>
+        </div>
+    </div>
+    <div class="row" style="padding-bottom: 10px">
+        <dl class="row">
+          <dt class="col-sm-2">Size</dt>
+          <dd class="col-sm-10 text-justify">{{ listing.square_feet }} M<sup>2</sup></dd>
+          <dt class="col-sm-2">Space</dt>
+          <dd class="col-sm-10 text-justify">{{ listing.space }}</dd>
+        </dl>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+        <h3>Ratings</h3>
+        </div>
+            <div class="col-sm-4">
+            <p>Communication {% for star in listing.review_scores_communication|rating %}
+                            {% if star == 1 %}
+                                <i class="fas fa-star"></i>
+                            {% else %}
+                                <i class="far fa-star"></i>
+                            {% endif %}
+                        {% endfor %} {{ listing.review_scores_communication }}
+            </p>
+            </div>
+            <div class="col-sm-4">
+            <p>Cleanliness {% for star in listing.review_scores_cleanliness|rating %}
+                            {% if star == 1 %}
+                                <i class="fas fa-star"></i>
+                            {% else %}
+                                <i class="far fa-star"></i>
+                            {% endif %}
+                        {% endfor %} {{ listing.review_scores_cleanliness }}
+            </p>
+            </div>
+            <div class="col-sm-4">
+            <p>Accuracy {% for star in listing.review_scores_accuracy|rating %}
+                            {% if star == 1 %}
+                                <i class="fas fa-star"></i>
+                            {% else %}
+                                <i class="far fa-star"></i>
+                            {% endif %}
+                        {% endfor %} {{ listing.review_scores_accuracy }}
+            </p>
+            </div>
+            <div class="col-sm-4">
+                <p>Location {% for star in listing.review_scores_location|rating %}
+                            {% if star == 1 %}
+                                <i class="fas fa-star"></i>
+                            {% else %}
+                                <i class="far fa-star"></i>
+                            {% endif %}
+                        {% endfor %} {{ listing.review_scores_location }}
+            </p>
+            </div>
+            <div class="col-sm-4">
+            <p>Checkin {% for star in listing.review_score_checkin|rating %}
+                            {% if star == 1 %}
+                                <i class="fas fa-star"></i>
+                            {% else %}
+                                <i class="far fa-star"></i>
+                            {% endif %}
+                        {% endfor %} {{ listing.review_score_checkin }}
+            </p>
+            </div>
+    </div>
+    <hr>
+
+    <h3>Reviews</h3>
+    <hr>
+        {% for review in reviews %}
+        <div class="row" style="padding-bottom: 20px">
+            <div class="col-sm-6">
+                <div class="card">
+                  <div class="card-header">
+                    <i class="fa fa-user"> </i> {{ review.reviewer_name }}
+                  </div>
+                  <div class="card-body">
+                    <p class="card-text">{{ review.comments }}</p>
+                  </div>
+                  <div class="card-footer text-muted">
+                    {{ review.date_field }}
+                  </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Remove Listing</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+        <form method="post">{% csrf_token %}
+      <div class="modal-body">
+          Are you sure?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-danger">Yes</button>
+      </div>
+        </form>
+    </div>
+  </div>
+</div>
+{% endblock content %}
+

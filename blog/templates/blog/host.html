@@ -1,0 +1,23 @@
+{% extends "blog/base.html" %}
+{% block content %}
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="card">
+              <div class="card-body">
+                <img src="{{ host.host_thumbnail_url }}" class="img-responsive" >
+                  <p> <i class="fa fa-sort-numeric-asc"></i> <b>Response rate</b> {{ host.host_response_rate }}</p>
+                  <p> <i class="fa fa-clock-o"></i> <b>Response time</b> {{ host.host_response_time }}</p>
+                  <p> <i class="fa fa-link"></i> <a href="{{ host.host_url }}">Host url</a></p>
+              </div>
+            </div>
+        </div>
+        <div class="col-sm-8">
+            <h4>{{ host.host_name }}</h4>
+            <p>{{ host.host_since }}</p>
+            <p>{{ host.host_about }}</p>
+            <p> <i class="fa fa-home"></i> Lives in {{ host.host_neighborhood }}</p>
+            <p><img src="{{ host.host_picture_url }}" /></p>
+            <p></p>
+        </div>
+    </div>
+{% endblock content %}
